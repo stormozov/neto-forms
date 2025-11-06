@@ -1,0 +1,21 @@
+.hex-input {
+  padding: 24px 36px;
+
+  background-color: #fff;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: #1b1b1b;
+  text-align: center;
+}
+
+.hex-input::placeholder {
+  color: #ccc;
+}
+
+.hex-input:focus {
+  outline: none;
+  border-color: #9921ff;
+}
