@@ -1,0 +1,57 @@
+import type { IStepsInfo } from "../components/Steps/types";
+
+/**
+ * Обновляет или добавляет запись в список шагов.
+ * 
+ * @param {IStepsInfo[]} steps - Список шагов
+ * @param {IStepsInfo} newStep - Новая запись
+ * 
+ * @returns новый массив записей (без мутации исходного)
+ */
+export const upsertStep = (
+  steps: IStepsInfo[], newStep: IStepsInfo
+): IStepsInfo[] => {
+  const existingIndex = steps.findIndex((step) => step.date === newStep.date);
+
+  let updatedSteps: IStepsInfo[];
+
+  if (existingIndex !== -1) {
+    // Обновляем существующую запись
+    updatedSteps = steps.map((step, idx) =>
+      idx === existingIndex
+        ? { ...step, distance: step.distance + newStep.distance }
+        : step
+    );
+  } else {
+    // Добавляем новую запись
+    updatedSteps = [...steps, newStep];
+  }
+
+  return updatedSteps;
+};
+
+/**
+ * Сортирует шаги от новых дат к старым (по убыванию).
+ * Формат даты: YYYY-MM-DD
+ * 
+ * @param {IStepsInfo[]} steps - Список шагов
+ * @returns {IStepsInfo[]} новый массив записей (без мутации исходного)
+ */
+export const sortStepsByDateDesc = (steps: IStepsInfo[]): IStepsInfo[] => {
+  return [...steps].sort((a, b) => b.date.localeCompare(a.date));
+};
+
+/**
+ * Объединяет добавление и сортировку.
+ * 
+ * @param {IStepsInfo[]} steps - Список шагов
+ * @param {IStepsInfo} newStep - Новая запись
+ * 
+ * @returns {IStepsInfo[]} новый массив записей (без мутации исходного)
+ */
+export const addAndSortStep = (
+  steps: IStepsInfo[], newStep: IStepsInfo
+): IStepsInfo[] => {
+  const stepsAfterUpsert = upsertStep(steps, newStep);
+  return sortStepsByDateDesc(stepsAfterUpsert);
+};

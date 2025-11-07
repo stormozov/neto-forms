@@ -1,0 +1,60 @@
+.steps-table {
+  width: 100%;
+  text-align: center;
+}
+
+.steps-table__header {
+  cursor: default;
+  font-size: 0.77rem;
+  color: #aaa;
+  text-transform: uppercase;
+}
+
+.steps-table__body {
+  outline: 1px solid #ccc;
+  border-radius: 8px;
+}
+
+.steps-table__row:nth-child(even) {
+  background-color: #f5f5f5;
+}
+
+.steps-table__header th,
+.steps-table__row td {
+  padding: 12px 24px;
+}
+
+.steps-table__actions {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+}
+
+.steps-table__delete,
+.steps-table__edit {
+  cursor: pointer;
+  border: none;
+  background-color: transparent;
+  font-size: 1.2rem;
+}
+
+.steps-table__delete:hover,
+.steps-table__edit:hover {
+  transform: scale(1.1) rotate(10deg);
+}
+
+.steps-table__delete {
+  color: red;
+}
+
+.steps-table__delete:hover {
+  color: #8b0000;
+}
+
+.steps-table__edit {
+  color: inherit;
+}
+
+.steps-table__edit:hover {
+  color: #3483dd;
+}

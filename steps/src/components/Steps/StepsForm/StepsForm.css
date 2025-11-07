@@ -1,0 +1,79 @@
+.steps-form {
+  display: flex;
+  align-items: end;
+  gap: 12px;
+
+  margin-bottom: 24px;
+
+  border-radius: 8px;
+}
+
+.steps-form__group {
+  flex: 1;
+}
+
+.steps-form__label {
+  display: block;
+  margin-bottom: 4px;
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.steps-form__label span {
+  color: red;
+}
+
+.steps-form__date,
+.steps-form__distance,
+.steps-form__button
+{
+  padding: 8px 24px;
+
+  height: 50px;
+
+  border: none;
+  border-radius: 8px;
+
+  font-size: inherit;
+}
+
+.steps-form__date,
+.steps-form__distance
+{
+  width: 100%;
+  background-color: #eeeeee;
+  color: #333;
+}
+
+.steps-form__date::placeholder,
+.steps-form__distance::placeholder
+{
+  color: #aaa;
+}
+
+.steps-form__button {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  cursor: pointer;
+  transition: 0.5s ease-in-out;
+
+  background-color: #1dd11d;
+
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.steps-form__button svg {
+  font-size: 1.2rem;
+}
+
+.steps-form__button:not(:disabled):hover {
+  background-color: #13a713;
+}
+
+.steps-form__button:disabled {
+  cursor: not-allowed;
+  background-color: #aaa;
+}
