@@ -1,4 +1,4 @@
-import type { IStepsInfo } from "../components/Steps/types";
+import type { IStepsAppState, IStepsInfo } from "../components/Steps/types";
 
 /**
  * Обновляет или добавляет запись в список шагов.
@@ -54,4 +54,32 @@ export const addAndSortStep = (
 ): IStepsInfo[] => {
   const stepsAfterUpsert = upsertStep(steps, newStep);
   return sortStepsByDateDesc(stepsAfterUpsert);
+};
+
+/**
+ * Обновляет состояние при сохранении шагов.
+ * 
+ * @param {IStepsAppState} prevState - Предыдущее состояние
+ * @param {IStepsInfo} newEntry - Новая запись
+ * 
+ * @returns {IStepsAppState} Обновленное состояние
+ */
+export const computeUpdatedSteps = (
+  prevState: IStepsAppState,
+  newEntry: IStepsInfo
+): IStepsAppState => {
+  let updatedSteps: IStepsInfo[];
+
+  if (prevState.editingStep) {
+    updatedSteps = prevState.steps.map(step =>
+      step.date === prevState.editingStep!.date ? newEntry : step
+    );
+  } else {
+    updatedSteps = addAndSortStep(prevState.steps, newEntry);
+  }
+
+  return {
+    steps: updatedSteps,
+    editingStep: null,
+  };
 };

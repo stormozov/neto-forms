@@ -8,6 +8,12 @@
   border-radius: 8px;
 }
 
+.steps-form input:read-only {
+  cursor: not-allowed;
+  outline: none;
+  color: #aaaaaa;
+}
+
 .steps-form__group {
   flex: 1;
 }
@@ -51,6 +57,11 @@
   color: #aaa;
 }
 
+.steps-form__actions {
+  display: flex;
+  gap: 12px;
+}
+
 .steps-form__button {
   display: flex;
   align-items: center;
@@ -71,9 +82,15 @@
 
 .steps-form__button:not(:disabled):hover {
   background-color: #13a713;
+  color: #ffffff;
 }
 
 .steps-form__button:disabled {
   cursor: not-allowed;
   background-color: #aaa;
+}
+
+.steps-form__button--cancel {
+  background-color: #eeeeee;
+  color: #333;
 }

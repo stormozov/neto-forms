@@ -1,11 +1,14 @@
-import { MdAddBox } from "react-icons/md";
+import { MdAddBox, MdCancel, MdEditSquare } from "react-icons/md";
+import type { IStepsInfo } from "../types";
 import "./StepsForm.css";
 
 /**
  * Интерфейс, описывающий свойства компонента StepsForm
  */
 interface StepsFormProps {
+  editingStep: IStepsInfo | null;
   onSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
+  onCancelEdit?: () => void;
 }
 
 /**
@@ -14,7 +17,7 @@ interface StepsFormProps {
  * @description
  * Компонент отображает форму для ввода информации о шагах
  */
-const StepsForm = ({ onSubmit }: StepsFormProps) => {
+const StepsForm = ({ onSubmit, editingStep, onCancelEdit }: StepsFormProps) => {
   return (
     <form onSubmit={onSubmit} className="steps-form">
       <div className="steps-form__group">
@@ -29,7 +32,9 @@ const StepsForm = ({ onSubmit }: StepsFormProps) => {
           className="steps-form__date" 
           id="steps-form-date" 
           name="steps-form-date"
+          defaultValue={editingStep?.date || ''}
           required
+          readOnly={!!editingStep}
         />
       </div>
 
@@ -48,13 +53,29 @@ const StepsForm = ({ onSubmit }: StepsFormProps) => {
           min="0"
           step="0.1"
           placeholder="0.0"
+          defaultValue={editingStep?.distance ?? ''}
           required 
         />
       </div>
 
-      <button type="submit" className="steps-form__button">
-        <MdAddBox />
-      </button>
+      <div className="steps-form__actions">
+        <button type="submit" className="steps-form__button">
+          {editingStep 
+            ? <><MdEditSquare /> Сохранить</>
+            : <MdAddBox className="steps-form__button-icon" />
+          }
+        </button>
+        {editingStep && onCancelEdit && (
+          <button
+            type="button"
+            className="steps-form__button steps-form__button--cancel"
+            onClick={onCancelEdit}
+          >
+            <MdCancel />
+            Отмена
+          </button>
+        )}
+      </div>
     </form>
   )
 };

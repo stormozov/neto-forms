@@ -10,6 +10,7 @@ import "./StepsTable.css";
 export interface IStepsTableProps {
   steps: IStepsInfo[];
   onDelete: (dateToDelete: string) => void;
+  onEdit: (step: IStepsInfo) => void;
 }
 
 /**
@@ -18,7 +19,7 @@ export interface IStepsTableProps {
  * @description
  * Компонент отображает таблицу с информацией о шагах
  */
-const StepsTable = ({ steps, onDelete }: IStepsTableProps) => {
+const StepsTable = ({ steps, onDelete, onEdit }: IStepsTableProps) => {
   const handleDeleteClick = (date: string, displayDate: string) => {
     if (confirm(`Удалить запись за ${displayDate}?`)) onDelete(date);
   };
@@ -33,14 +34,20 @@ const StepsTable = ({ steps, onDelete }: IStepsTableProps) => {
         </tr>
       </thead>
       <tbody className="steps-table__body">
-        {steps.map(({ date, distance }) => {
+        {steps.map((step) => {
+          const { date, distance } = step;
           const formattedDate = formatDate(date);
+
           return (
             <tr key={date} className="steps-table__row">
               <td>{formattedDate}</td>
               <td>{distance}</td>
               <td className="steps-table__actions">
-                <button className="steps-table__edit" title="Изменить">
+                <button 
+                  className="steps-table__edit" 
+                  title="Изменить"
+                  onClick={() => onEdit(step)}
+                >
                   <MdEditSquare />
                 </button>
                 <button

@@ -1,17 +1,10 @@
 import React from "react";
 import { parseStepsForm } from "../../utils/formUtils";
-import { addAndSortStep } from "../../utils/stepsUtils";
+import { computeUpdatedSteps } from "../../utils/stepsUtils";
 import "./StepsApp.css";
 import StepsForm from "./StepsForm/StepsForm";
 import StepsTable from "./StepsTable/StepsTable";
-import type { IStepsInfo } from "./types";
-
-/**
- * Интерфейс, описывающий состояние компонента StepsApp
- */
-export interface IStepsAppState {
-  steps: IStepsInfo[];
-}
+import type { IStepsAppState, IStepsInfo } from "./types";
 
 /**
  * Компонент StepsApp
@@ -23,6 +16,7 @@ export interface IStepsAppState {
 export default class StepsApp extends React.Component<object, IStepsAppState> {
   state: IStepsAppState = {
     steps: [],
+    editingStep: null
   };
 
   /**
@@ -49,9 +43,7 @@ export default class StepsApp extends React.Component<object, IStepsAppState> {
       return;
     }
 
-    this.setState((prevState) => ({
-      steps: addAndSortStep(prevState.steps, newEntry),
-    }));
+    this.setState((prevState) => computeUpdatedSteps(prevState, newEntry));
 
     form.reset();
   };
@@ -67,16 +59,30 @@ export default class StepsApp extends React.Component<object, IStepsAppState> {
     }));
   };
 
+  private _handleEditStep = (step: IStepsInfo) => {
+    this.setState({ editingStep: step });
+    // Форма сама заполнится, когда получит editingStep через пропсы
+  };
+
+  private _handleCancelEdit = () => {
+    this.setState({ editingStep: null });
+  };  
+
   /**
    * Рендер компонента
    */
   render () {
     return (
       <div className="steps-app">
-        <StepsForm onSubmit={this._handleFormSubmit} />
+        <StepsForm
+          onSubmit={this._handleFormSubmit}
+          editingStep={this.state.editingStep}
+          onCancelEdit={this._handleCancelEdit}
+        />
         <StepsTable
           steps={this.state.steps} 
           onDelete={this._handleDeleteStep} 
+          onEdit={this._handleEditStep}
         />
       </div>
     )
