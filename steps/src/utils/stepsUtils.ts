@@ -83,3 +83,31 @@ export const computeUpdatedSteps = (
     editingStep: null,
   };
 };
+
+/**
+ * Вычисляет общее расстояние по всем шагам.
+ * 
+ * @param {IStepsInfo[]} steps - Список шагов
+ * @returns {number} Общее расстояние
+ */
+export const getTotalDistance = (steps: IStepsInfo[]): number => {
+  return steps.reduce((total, step) => total + step.distance, 0);
+};
+
+/**
+ * Форматирует расстояние в километрах.
+ * 
+ * @param {number} distance - Расстояние в метрах
+ * @param {string} locale - Локализация (по умолчанию "ru-RU")
+ * 
+ * @returns {string} Форматированное расстояние
+ */
+export const formatDistance = (
+  distance: number, 
+  locale: string = "ru-RU"
+): string => {
+  return distance.toLocaleString(locale, {
+    minimumFractionDigits: 1,
+    maximumFractionDigits: 1,
+  });
+};

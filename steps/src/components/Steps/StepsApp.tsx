@@ -4,6 +4,7 @@ import { computeUpdatedSteps } from "../../utils/stepsUtils";
 import "./StepsApp.css";
 import StepsForm from "./StepsForm/StepsForm";
 import StepsTable from "./StepsTable/StepsTable";
+import TotalDistance from "./TotalDistance/TotalDistance";
 import type { IStepsAppState, IStepsInfo } from "./types";
 
 /**
@@ -59,11 +60,19 @@ export default class StepsApp extends React.Component<object, IStepsAppState> {
     }));
   };
 
+  /**
+   * Обработчик события редактирования шага
+   * 
+   * @param {IStepsInfo} step - Редактируемая запись
+   */
   private _handleEditStep = (step: IStepsInfo) => {
     this.setState({ editingStep: step });
     // Форма сама заполнится, когда получит editingStep через пропсы
   };
 
+  /**
+   * Обработчик события отмены редактирования шага
+   */
   private _handleCancelEdit = () => {
     this.setState({ editingStep: null });
   };  
@@ -71,7 +80,7 @@ export default class StepsApp extends React.Component<object, IStepsAppState> {
   /**
    * Рендер компонента
    */
-  render () {
+  render () {    
     return (
       <div className="steps-app">
         <StepsForm
@@ -79,6 +88,9 @@ export default class StepsApp extends React.Component<object, IStepsAppState> {
           editingStep={this.state.editingStep}
           onCancelEdit={this._handleCancelEdit}
         />
+
+        <TotalDistance steps={this.state.steps} />
+
         <StepsTable
           steps={this.state.steps} 
           onDelete={this._handleDeleteStep} 

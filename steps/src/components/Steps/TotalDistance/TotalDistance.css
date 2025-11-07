@@ -1,0 +1,13 @@
+.total-distance {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  
+  font-size: inherit;
+  color: #949494;
+}
+
+.total-distance__value {
+  font-weight: bold;
+}

@@ -72,7 +72,6 @@ const StepsForm = ({ onSubmit, editingStep, onCancelEdit }: StepsFormProps) => {
             onClick={onCancelEdit}
           >
             <MdCancel />
-            Отмена
           </button>
         )}
       </div>
